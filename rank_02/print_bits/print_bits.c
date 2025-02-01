@@ -8,8 +8,9 @@ void	print_bits(unsigned char octet)
 		(octet & i)	? write (1, "1", 1) : write (1, "0", 1);
 }
 
-/*int	main(void)
+int	main(void)
 {
-	unsigned char	n = 2;
+	unsigned char	n = 54;
 	print_bits(n);
-}*/
+	write(1, "\n", 1);
+}
