@@ -1,42 +1,51 @@
-#include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
-
-int	ft_toupper(char c)
-{
-	if (c >= 'a' && c <= 'z')
-		c -= 32;
-	else if (c >= 'A' && c <= 'Z')
-		c += 32;
-	return c;
-}
 
 char	*snake_to_camel(char *str)
 {
 	int	i = 0;
+	int	j = 0;
+	char	*res = malloc(sizeof(char) * 4096);
 
-	while (str[i] != '\0')
+
+	while (str[i] != '_')
+	{
+		res[j] = str[i];
+		i++;
+		j++;
+	}
+	while (str[i])
 	{
 		if (str[i] == '_')
 		{
 			i++;
-			str[i] = ft_toupper(str[i]);
-			write(1, &str[i], 1);
+			res[j] = toupper(str[i]);
+			j++;
+			i++;
 		}
 		else
-			write(1, &str[i], 1);
-		i++;
+		{
+			res[j] = str[i];
+			i++;
+			j++;
+		}
+	}
+	res[j] = '\0';
+	for (int i = 0; res[i] != '\0'; i++)
+	{
+		write(1, &res[i], 1);
 	}
 	write(1, "\n", 1);
-	return (str);
+	return res;
 }
 
 int	main(int ac, char **av)
 {
 	if (ac != 2)
-	{
-		write(1, "\n", 1);
-		return (0);
-	}
-	char *str = snake_to_camel(av[1]);
+		return (write (1, "\n", 1));
+	char	*res = snake_to_camel(av[1]);
+
+	free(res);
 }
